@@ -1,6 +1,7 @@
 using Serilog;
 using Carter;
 using SaveTheKitty.API.Extensions.DependencyInjection;
+using SaveTheKitty.API.Exceptions.Handling;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -18,9 +19,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.RegisterServices(builder.Configuration);
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 WebApplication app = builder.Build();
 app.UseSerilogRequestLogging();
+app.UseExceptionHandler();
 app.UseCors("MyOrigins");
 
 if (app.Environment.IsDevelopment())
