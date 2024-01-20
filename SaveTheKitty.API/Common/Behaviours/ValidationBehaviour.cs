@@ -16,7 +16,7 @@ internal sealed class ValidationBehaviour<TRequest, TResponse>(IEnumerable<IVali
             .Where(m => m != null)
             .ToList();
 
-        if (failures.Count != 0)
+        if (failures.Count > 0)
         {
             logger.LogError("Validation failed at request: {requestName}. Following errors are: {errorList}", typeof(TRequest).FullName, string.Join(",", failures));
             foreach (ValidationFailure failure in failures)

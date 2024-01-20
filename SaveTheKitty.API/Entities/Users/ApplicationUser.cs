@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace SaveTheKitty.API.Entities.Users;
-public class ApplicationUser : IdentityUser<string>
+public class ApplicationUser : IdentityUser<Guid>
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
@@ -17,5 +17,7 @@ internal class ApplicationUserConfiguration : IEntityTypeConfiguration<Applicati
         builder.Property(m => m.LastName).IsRequired();
         builder.Property(m => m.Email).IsRequired();
         builder.Property(m => m.UserName).IsRequired();
+        builder.Property(e => e.Id)
+        .ValueGeneratedOnAdd();
     }
 }

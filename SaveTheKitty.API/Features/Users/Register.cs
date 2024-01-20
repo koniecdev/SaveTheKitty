@@ -1,10 +1,13 @@
 ﻿using Carter;
 using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Riok.Mapperly.Abstractions;
 using SaveTheKitty.API.Entities.Users;
 using SaveTheKitty.API.Exceptions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SaveTheKitty.API.Features.Users;
 
@@ -15,7 +18,7 @@ public static class RegisterApplicationUser
         string LastName,
         string Email,
         string Password,
-        string? Phone
+        string? Phone = null
         ) : IRequest<Guid>;
     public sealed class Validator : AbstractValidator<Command>
     {
@@ -40,8 +43,13 @@ public static class RegisterApplicationUser
             }
             ApplicationUser entity = request.ToEntity();
             entity.UserName = entity.Email;
-            await _userManager.CreateAsync(entity, request.Password);
-            return Guid.Parse(entity.Id);
+            IdentityResult results = await _userManager.CreateAsync(entity, request.Password);
+            if (!results.Succeeded)
+            {
+                List<ValidationFailure> validationFailures = results.Errors.Select(m => new ValidationFailure("Password", m.Description)).ToList();
+                throw new ValidationException(validationFailures);
+            }
+            return entity.Id;
         }
     }
 
