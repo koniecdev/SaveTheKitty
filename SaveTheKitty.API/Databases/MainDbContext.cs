@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SaveTheKitty.API.Common.Services.Interfaces;
+using SaveTheKitty.API.Entities.Cats;
 using SaveTheKitty.API.Entities.Common;
 using SaveTheKitty.API.Entities.Users;
 using System.Reflection;
@@ -20,6 +21,7 @@ internal class MainDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     }
 
     public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
+    public DbSet<Cat> Cats => Set<Cat>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

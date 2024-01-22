@@ -1,7 +1,7 @@
 ﻿namespace SaveTheKitty.API.Entities.Common;
 public class AuditableEntity
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public DateTimeOffset Created { get; set; }
     public string? CreatedBy { get; set; }
     public DateTimeOffset? Modified { get; set; }

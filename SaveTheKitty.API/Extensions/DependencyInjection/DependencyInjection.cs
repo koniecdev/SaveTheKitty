@@ -15,11 +15,11 @@ internal static class DependencyInjection
     {
         services.AddScoped<IDateTime, DateTimeProvider>();
         services.AddDbContext<MainDbContext>(o => o.UseSqlServer(configuration.GetConnectionString("Database") ?? throw new Exception("Connection string not found")));
-        services
-            .AddIdentity<ApplicationUser, ApplicationRole>()
-            .AddEntityFrameworkStores<MainDbContext>()
-            .AddDefaultTokenProviders();
         services.AddScoped<IMainDbContext, MainDbContext>();
+        services.AddIdentityCore<ApplicationUser>()
+            .AddRoles<ApplicationRole>()
+            .AddEntityFrameworkStores<MainDbContext>()
+            .AddApiEndpoints();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())

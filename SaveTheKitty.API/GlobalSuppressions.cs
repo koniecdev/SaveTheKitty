@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Mapper", "RMG020:Source member is not mapped to any target member", Justification = "<Pending>", Scope = "member", Target = "~M:SaveTheKitty.API.Features.Users.RegisterApplicationUserMapper.ToEntity(SaveTheKitty.API.Features.Users.RegisterApplicationUser.Command)~SaveTheKitty.API.Entities.Users.ApplicationUser")]
+[assembly: SuppressMessage("Mapper", "RMG020:Source member is not mapped to any target member", Justification = "<Pending>", Scope = "member", Target = "~M:SaveTheKitty.API.Features.Users.GetUsersMapper.Map(SaveTheKitty.API.Entities.Users.ApplicationUser)~SaveTheKitty.API.Features.Users.UserResponse")]

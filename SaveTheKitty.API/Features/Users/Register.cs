@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Riok.Mapperly.Abstractions;
 using SaveTheKitty.API.Entities.Users;
 using SaveTheKitty.API.Exceptions;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SaveTheKitty.API.Features.Users;
 
@@ -54,16 +52,23 @@ public static class RegisterApplicationUser
     }
 
 }
-public class RegisterEndpoints : CarterModule
+public sealed record RegisterApplicationUserRequest(
+    string FirstName,
+    string LastName,
+    string Email,
+    string Password,
+    string? Phone = null);
+public class RegisterApplicationUserEndpoint : CarterModule
 {
-    public RegisterEndpoints() : base("/application-users")
+    public RegisterApplicationUserEndpoint() : base("/application-users")
     {
         //this.
     }
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/", async (RegisterApplicationUser.Command command, ISender sender) =>
+        app.MapPost("/", async (RegisterApplicationUserRequest request, ISender sender) =>
         {
+            RegisterApplicationUser.Command command = request.ToCommand();
             Guid result = await sender.Send(command);
             return TypedResults.Ok(result);
         });
@@ -75,4 +80,5 @@ public static partial class RegisterApplicationUserMapper
 {
     [MapProperty(nameof(RegisterApplicationUser.Command.Phone), nameof(ApplicationUser.PhoneNumber))]
     public static partial ApplicationUser ToEntity(this RegisterApplicationUser.Command personCommand);
+    public static partial RegisterApplicationUser.Command ToCommand(this RegisterApplicationUserRequest personRequest);
 }
