@@ -1,6 +1,5 @@
 ﻿using Carter;
 using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
 using Riok.Mapperly.Abstractions;
 using SaveTheKitty.API.Entities.Cats;

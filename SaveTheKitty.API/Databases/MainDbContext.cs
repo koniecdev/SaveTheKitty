@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace SaveTheKitty.API.Databases;
 
-internal class MainDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, IMainDbContext
+public sealed class MainDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, IMainDbContext
 {
     private readonly IDateTime? _dateTime;
 

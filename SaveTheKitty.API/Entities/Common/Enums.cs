@@ -1,4 +1,4 @@
-﻿namespace SaveTheKitty.API.Entities.Common.Enums;
+﻿namespace SaveTheKitty.API.Entities.Common;
 public enum FiltersMethods
 {
     filter_eq,

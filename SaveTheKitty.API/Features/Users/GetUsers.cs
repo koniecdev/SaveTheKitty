@@ -1,11 +1,9 @@
 ﻿using Carter;
 using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Riok.Mapperly.Abstractions;
 using SaveTheKitty.API.Contracts;
-using SaveTheKitty.API.Entities.Common.Enums;
+using SaveTheKitty.API.Entities.Common;
 using SaveTheKitty.API.Entities.Common.Helpers;
 using SaveTheKitty.API.Entities.Users;
 using System.Linq.Expressions;

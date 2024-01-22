@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SaveTheKitty.API.Migrations
 {
     /// <inheritdoc />
-    public partial class x : Migration
+    public partial class AddCatToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

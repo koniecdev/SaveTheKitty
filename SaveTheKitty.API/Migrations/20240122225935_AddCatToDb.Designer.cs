@@ -12,8 +12,8 @@ using SaveTheKitty.API.Databases;
 namespace SaveTheKitty.API.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20240122193823_x")]
-    partial class x
+    [Migration("20240122225935_AddCatToDb")]
+    partial class AddCatToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

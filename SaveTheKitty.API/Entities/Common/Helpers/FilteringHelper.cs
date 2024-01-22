@@ -1,6 +1,4 @@
-﻿using SaveTheKitty.API.Entities.Common.Enums;
-
-namespace SaveTheKitty.API.Entities.Common.Helpers;
+﻿namespace SaveTheKitty.API.Entities.Common.Helpers;
 public static class FilteringHelper
 {
     public static (FiltersMethods method, string value)? MapFilter(string[] propsToFilter, string searchedProperty)

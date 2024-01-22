@@ -5,8 +5,6 @@ using SaveTheKitty.API.Exceptions.Handling;
 using Microsoft.AspNetCore.Identity;
 using SaveTheKitty.API.Entities.Users;
 using System.Security.Claims;
-using Microsoft.Extensions.Configuration;
-using SaveTheKitty.API.Databases;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace SaveTheKitty.API.Contracts;
+﻿namespace SaveTheKitty.API.Contracts;
 public class PagedList<T>(List<T> results, int totalCount, int? pageNumber = null, int? pageSize = null)
 {
     public List<T> Results { get; set; } = results;
