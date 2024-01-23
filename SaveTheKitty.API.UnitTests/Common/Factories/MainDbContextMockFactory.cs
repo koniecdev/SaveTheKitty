@@ -23,4 +23,9 @@ public static class MainDbContextMockFactory
         dbContext.SaveChanges();
         return dbContext;
     }
+    public static void Destroy(MainDbContext context)
+    {
+        context.Database.EnsureDeleted();
+        context.Dispose();
+    }
 }
