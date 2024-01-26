@@ -13,12 +13,12 @@ public static class CreateCat
     public sealed record Command (
         Guid ApplicationUserId,
         string Name,
+        bool HasTemporaryShelter,
         bool HasHealthBook = false,
         bool RequireMedicalHelp = false,
         bool? IsMale = null,
         int? Age = null,
         string? Description = null,
-        string? Breed = null,
         string? HealthStatus = null,
         string? VaccinationsInfo = null,
         string? History = null
@@ -31,7 +31,6 @@ public static class CreateCat
             RuleFor(m => m.Name).NotEmpty().MinimumLength(2).MaximumLength(30);
             RuleFor(m => m.Age).GreaterThanOrEqualTo(0).LessThan(40);
             RuleFor(m => m.Description).MaximumLength(2000);
-            RuleFor(m => m.Breed).MaximumLength(100);
             RuleFor(m => m.HealthStatus).MaximumLength(2000);
             RuleFor(m => m.VaccinationsInfo).MaximumLength(2000);
             RuleFor(m => m.History).MaximumLength(2000);
@@ -53,38 +52,40 @@ public static class CreateCat
     }
 
 }
-public sealed record CreateCatRequest(
-    Guid ApplicationUserId,
-    string Name,
-    bool HasHealthBook = false,
-    bool RequireMedicalHelp = false,
-    bool? IsMale = null,
-    int? Age = null,
-    string? Description = null,
-    string? Breed = null,
-    string? HealthStatus = null,
-    string? VaccinationsInfo = null,
-    string? History = null);
 public class CreateCatEndpoint : CarterModule
 {
     public CreateCatEndpoint() : base("/cats")
     {
-        RequireAuthorization();
+        WithTags("Cats");
+        //RequireAuthorization();
     }
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/", async (CreateCatRequest request, ISender sender, ClaimsPrincipal claimsPrincipal) =>
         {
-            if (claimsPrincipal.Claims.First(m => m.Type == ClaimTypes.NameIdentifier).Value != request.ApplicationUserId.ToString())
-            {
-                return Results.Forbid();
-            }
+            //if (claimsPrincipal.Claims.First(m => m.Type == ClaimTypes.NameIdentifier).Value != request.ApplicationUserId.ToString())
+            //{
+            //    return Results.Forbid();
+            //}
             CreateCat.Command command = request.ToCommand();
             Guid result = await sender.Send(command);
             return TypedResults.Ok(result);
         });
     }
 }
+
+public sealed record CreateCatRequest(
+    Guid ApplicationUserId,
+    string Name,
+    bool HasTemporaryShelter,
+    bool HasHealthBook = false,
+    bool RequireMedicalHelp = false,
+    bool? IsMale = null,
+    int? Age = null,
+    string? Description = null,
+    string? HealthStatus = null,
+    string? VaccinationsInfo = null,
+    string? History = null);
 
 [Mapper]
 public static partial class CreateCatMapper

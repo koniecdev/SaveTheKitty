@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using SaveTheKitty.API.Exceptions.Handling.StrategyPattern;
 
-namespace SaveTheKitty.API.Exceptions.Handling;
+namespace SaveTheKitty.API.Exceptions.Handling.IndividualStrategies;
 
 internal sealed class ValidationExceptionHandlingStrategy : IExceptionHandlingStrategy
 {

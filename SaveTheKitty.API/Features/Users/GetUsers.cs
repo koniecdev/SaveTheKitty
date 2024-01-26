@@ -1,8 +1,8 @@
 ﻿using Carter;
 using FluentValidation;
 using MediatR;
-using Riok.Mapperly.Abstractions;
 using SaveTheKitty.API.Contracts;
+using SaveTheKitty.API.Contracts.Responses;
 using SaveTheKitty.API.Entities.Common;
 using SaveTheKitty.API.Entities.Common.Helpers;
 using SaveTheKitty.API.Entities.Users;
@@ -12,7 +12,7 @@ namespace SaveTheKitty.API.Features.Users;
 
 public static class GetUsers
 {
-    public sealed class Query(string? sortBy, string? sortOrder, int? page, int? size) : IRequest<PagedList<UserResponse>>, IQuery
+    internal sealed class Query(string? sortBy, string? sortOrder, int? page, int? size) : IRequest<PagedList<UserResponse>>, ICollectionQuery
     {
         public string? SortBy { get; init; } = sortBy;
         public string? SortOrder { get; init; } = sortOrder;
@@ -97,20 +97,13 @@ public static class GetUsers
             return query;
         }
     }
-
-}
-public sealed class UserResponse
-{
-    public required Guid Id { get; init; }
-    public required string Name { get; init; }
-    public required string Email { get; init; }
-    public required string Username { get; init; }
-    public string? Phone { get; init; } = null;
 }
 public class GetUsersEndpoint : CarterModule
 {
     public GetUsersEndpoint() : base("/application-users")
     {
+        //RequireAuthorization();
+        WithTags("Users");
     }
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -134,14 +127,4 @@ public class GetUsersEndpoint : CarterModule
             return TypedResults.Ok(result);
         });
     }
-}
-
-[Mapper]
-public static partial class GetUsersMapper
-{
-    public static partial IQueryable<UserResponse> ProjectToDto(this IQueryable<ApplicationUser> q);
-
-    [MapProperty(nameof(ApplicationUser.UserName), nameof(UserResponse.Username))]
-    [MapProperty(nameof(ApplicationUser.PhoneNumber), nameof(UserResponse.Phone))]
-    private static partial UserResponse Map(ApplicationUser x);
 }

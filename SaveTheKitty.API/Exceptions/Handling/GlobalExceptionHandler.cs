@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using SaveTheKitty.API.Exceptions.Handling.IndividualImplementations;
+using SaveTheKitty.API.Exceptions.Handling.IndividualStrategies;
+using SaveTheKitty.API.Exceptions.Handling.StrategyPattern;
 
 namespace SaveTheKitty.API.Exceptions.Handling;
 internal sealed class GlobalExceptionHandler : IExceptionHandler
@@ -10,6 +11,7 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
     {
         ExceptionHandling exceptionHandling = new(exception switch {
             ValidationException => new ValidationExceptionHandlingStrategy(),
+            NotFoundException => new NotFoundExceptionHandlingStrategy(),
             _ => new DefaultExceptionHandlerStrategy()
         }, exception);
 

@@ -1,6 +1,6 @@
 ﻿namespace SaveTheKitty.API.Contracts;
 
-public interface IQuery
+public interface ICollectionQuery
 {
     public string? SortBy { get; init; }
     public string? SortOrder { get; init; }

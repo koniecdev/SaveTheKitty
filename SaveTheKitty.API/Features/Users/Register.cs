@@ -52,17 +52,12 @@ public static class RegisterApplicationUser
     }
 
 }
-public sealed record RegisterApplicationUserRequest(
-    string FirstName,
-    string LastName,
-    string Email,
-    string Password,
-    string? Phone = null);
+
 public class RegisterApplicationUserEndpoint : CarterModule
 {
     public RegisterApplicationUserEndpoint() : base("/application-users")
     {
-        //this.
+        WithTags("Users");
     }
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -74,6 +69,13 @@ public class RegisterApplicationUserEndpoint : CarterModule
         });
     }
 }
+
+public sealed record RegisterApplicationUserRequest(
+    string FirstName,
+    string LastName,
+    string Email,
+    string Password,
+    string? Phone = null);
 
 [Mapper]
 public static partial class RegisterApplicationUserMapper

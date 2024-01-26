@@ -14,7 +14,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorizationBuilder();
 
-builder.Services.AddCarter();
+builder.Services.AddCarter(configurator: cfg => { cfg.WithValidatorLifetime(ServiceLifetime.Scoped); });
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Origins", policy =>
@@ -42,6 +42,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapCarter();
-app.MapGet("foo", (ClaimsPrincipal principal) => $"xd" ).RequireAuthorization();
-app.MapIdentityApi<ApplicationUser>();
+app.MapGroup("identity").MapIdentityApi<ApplicationUser>().WithTags("Identity");
 app.Run();

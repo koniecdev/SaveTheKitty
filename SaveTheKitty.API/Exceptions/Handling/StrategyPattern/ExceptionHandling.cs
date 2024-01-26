@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SaveTheKitty.API.Exceptions.Handling;
+namespace SaveTheKitty.API.Exceptions.Handling.StrategyPattern;
 
 internal sealed class ExceptionHandling(IExceptionHandlingStrategy exceptionHandlingStrategy, Exception exception)
 {

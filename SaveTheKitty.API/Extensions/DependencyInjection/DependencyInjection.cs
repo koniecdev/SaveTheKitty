@@ -13,12 +13,6 @@ internal static class DependencyInjection
 {
     public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
-            .AddOpenRequestPreProcessor(typeof(LoggingBehaviour<>))
-            .AddOpenBehavior(typeof(ValidationBehaviour<,>)));
-
         services.AddScoped<IDateTime, DateTimeProvider>();
         services.AddDbContext<MainDbContext>(o => o.UseSqlServer(configuration.GetConnectionString("Database") ?? throw new Exception("Connection string not found")));
         services.AddScoped<IMainDbContext, MainDbContext>();
@@ -26,7 +20,11 @@ internal static class DependencyInjection
             .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<MainDbContext>()
             .AddApiEndpoints();
-
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services
+            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
+            .AddOpenRequestPreProcessor(typeof(LoggingBehaviour<>))
+            .AddOpenBehavior(typeof(ValidationBehaviour<,>)));
         return services;
     }
 }

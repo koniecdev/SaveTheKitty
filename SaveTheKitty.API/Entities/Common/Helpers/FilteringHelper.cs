@@ -20,4 +20,15 @@ public static class FilteringHelper
         };
         return (methodToReturn, splittedProperty[2]);
     }
+    public static (FiltersMethods method, string value)? MapFilter(string[] propsToFilter, string searchedProperty, FiltersMethods searchedFilter)
+    {
+        string[]? splittedProperty = propsToFilter
+            .FirstOrDefault(m => m.StartsWith($"{searchedProperty.ToLower()}:{searchedFilter.ToString().Replace("filter_", "")}", StringComparison.CurrentCultureIgnoreCase))
+            ?.Split(':').ToArray();
+        if (splittedProperty is null)
+        {
+            return null;
+        }
+        return (searchedFilter, splittedProperty[2]);
+    }
 }

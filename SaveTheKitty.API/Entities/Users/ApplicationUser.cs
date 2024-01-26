@@ -19,7 +19,7 @@ internal class ApplicationUserConfiguration : IEntityTypeConfiguration<Applicati
         builder.Property(m => m.LastName).IsRequired();
         builder.Property(m => m.Email).IsRequired();
         builder.Property(m => m.UserName).IsRequired();
-        builder.Property(e => e.Id)
-        .ValueGeneratedOnAdd();
+        builder.Property(m => m.Id).ValueGeneratedOnAdd();
+        builder.HasIndex(m => m.Email).IsUnique();
     }
 }

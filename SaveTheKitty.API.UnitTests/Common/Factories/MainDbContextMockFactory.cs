@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using SaveTheKitty.API.Common.Services.Interfaces;
 using SaveTheKitty.API.Databases;
@@ -14,7 +11,7 @@ public static class MainDbContextMockFactory
     public static MainDbContext Create()
     {
         DbContextOptions<MainDbContext> options = new DbContextOptionsBuilder<MainDbContext>()
-            .UseInMemoryDatabase(databaseName: "Database")
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
         IDateTime dateTime = Substitute.For<IDateTime>();
         dateTime.Now.Returns(new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.FromHours(0)));

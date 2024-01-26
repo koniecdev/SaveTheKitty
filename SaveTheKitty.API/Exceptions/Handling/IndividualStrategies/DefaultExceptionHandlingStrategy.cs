@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SaveTheKitty.API.Exceptions.Handling.StrategyPattern;
 
-namespace SaveTheKitty.API.Exceptions.Handling.IndividualImplementations;
+namespace SaveTheKitty.API.Exceptions.Handling.IndividualStrategies;
 
 internal sealed class DefaultExceptionHandlerStrategy : IExceptionHandlingStrategy
 {

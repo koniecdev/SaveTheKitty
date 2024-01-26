@@ -9,14 +9,14 @@ public class Cat : AuditableEntity
     public required string Name { get; set; }
     public required bool HasHealthBook { get; set; }
     public required bool RequireMedicalHelp { get; set; }
+    public required bool HasTemporaryShelter { get; set; }
     public bool? IsMale { get; set; }
     public int? Age { get; set; }
     public string? Description { get; set; }
-    public string? Breed { get; set; }
     public string? HealthStatus { get; set; }
     public string? VaccinationsInfo { get; set; }
     public string? History { get; set; }
-    public required Guid ApplicationUserId { get; set; }
+    public required Guid ApplicationUserId { get; init; }
     public ApplicationUser ApplicationUser { get; set; } = null!;
 }
 
@@ -30,5 +30,6 @@ internal class CatConfiguration : IEntityTypeConfiguration<Cat>
         builder.Property(m => m.RequireMedicalHelp).IsRequired();
         builder.Property(e => e.Id)
         .ValueGeneratedOnAdd();
+        builder.HasQueryFilter(m => m.StatusId != 0);
     }
 }
